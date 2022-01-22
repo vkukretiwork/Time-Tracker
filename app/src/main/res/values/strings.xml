@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">TimeTracker</string>
+    <string-array name="day_list_filter_options">
+        <item>Date</item>
+        <item>Time</item>
+    </string-array>
+    <string-array name="month_options">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+    <string-array name="max_time_axis_value_options">
+        <item>24</item>
+        <item>20</item>
+        <item>16</item>
+        <item>12</item>
+        <item>08</item>
+        <item>04</item>
+    </string-array>
+    <string-array name="grid_options">
+        <item>Grid</item>
+        <item>No Grid</item>
+        <item>Horizontal</item>
+    </string-array>
+    <string-array name="chart_type_options">
+        <item>Line Chart</item>
+        <item>Bar Chart</item>
+    </string-array>
+    <string-array name="year_options">
+        <item>2022</item>
+    </string-array>
+</resources>

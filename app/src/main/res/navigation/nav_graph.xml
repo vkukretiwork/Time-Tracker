@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/timerFragment">
+
+    <action android:id="@+id/action_global_timerFragment"
+        app:destination="@id/timerFragment"
+        app:launchSingleTop="true" />
+
+    <fragment
+        android:id="@+id/timerFragment"
+        android:name="com.example.android.timetracker.TimerFragment"
+        android:label="TimerFragment" />
+    <fragment
+        android:id="@+id/daysListFragment"
+        android:name="com.example.android.timetracker.DaysListFragment"
+        android:label="DaysListFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.android.timetracker.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/chartFragment"
+        android:name="com.example.android.timetracker.ChartFragment"
+        android:label="ChartFragment" />
+</navigation>
