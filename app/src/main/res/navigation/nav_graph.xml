@@ -24,4 +24,8 @@
         android:id="@+id/chartFragment"
         android:name="com.example.android.timetracker.ChartFragment"
         android:label="ChartFragment" />
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.android.timetracker.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" />
 </navigation>

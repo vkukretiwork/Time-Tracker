@@ -27,18 +27,12 @@ class MainActivity : AppCompatActivity() {
         setChartYearSpinnerList()
         navigateToTimerFragmentIfNeeded(intent)
 
-        setSupportActionBar(toolbar)
         bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
         bottomNavigationView.setOnItemReselectedListener { /* NO-OP */ }
 
         navHostFragment.findNavController()
                 .addOnDestinationChangedListener{ _, destination, _ ->
                     when(destination.id){
-//                        R.id.chartFragment -> {
-//                            if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
-//                                bottomNavigationView.visibility = View.GONE
-//                            }else { bottomNavigationView.visibility = View.VISIBLE }
-//                        }
                         R.id.timerFragment, R.id.daysListFragment, R.id.settingsFragment, R.id.chartFragment
                             -> {
                             bottomNavigationView.visibility = View.VISIBLE
@@ -48,9 +42,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
-//        if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
-//            bottomNavigationView.visibility = View.GONE
-//        }
     }
 
     companion object{
@@ -74,15 +65,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        if(navHostFragment.findNavController()
-//                .currentDestination?.id == R.id.chartFragment){
-//            if(requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
-//                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//            }
-//        }
-//        return super.onKeyDown(keyCode, event)
-//    }
 
 //    *****NOT THAT IMPORTANT*****
 

@@ -2,14 +2,17 @@ package com.example.android.timetracker
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,10 +22,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings){
 
     private val viewModel : MainViewModel by viewModels()
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//        return super.onCreateView(inflater, container, savedInstanceState)
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        activity?.title = "Settings"
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +41,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings){
     private fun subscribeToButtons(){
         tvResetTimerSetting.setOnClickListener {
             showResetTimerDialog()
+        }
+        tvContactUs.setOnClickListener {
+            composeContactUsEmail(arrayOf("vkukretiwork@gmail.com"), "Regarding Time Tracker App")
+        }
+        tvPrivacyPolicy.setOnClickListener {
+            PrivacyPolicyFragment().show(parentFragmentManager, "PrivacyPolicyBottomSheetDialog")
         }
     }
     private fun subscribeToObservers() {
@@ -64,6 +77,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings){
                 }
                 .create()
         dialog.show()
+    }
+    private fun composeContactUsEmail(addresses: Array<String>, subject: String) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:") // only email apps should handle this
+            putExtra(Intent.EXTRA_EMAIL, addresses)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+        }
+        startActivity(intent)
     }
 
     private fun getCurrDate() = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())

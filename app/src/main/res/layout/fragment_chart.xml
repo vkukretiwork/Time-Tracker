@@ -13,7 +13,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/spYearFilter"
-        app:layout_constraintEnd_toStartOf="@+id/btnApplyMonthChangeToChart"
+        app:layout_constraintEnd_toStartOf="@+id/btnApplyInChartFragment"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/spYearFilter" />
 
@@ -28,7 +28,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:entries="@array/grid_options"/>
+        tools:entries="@array/year_options" />
 
 
     <Spinner
@@ -41,7 +41,7 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnApplyMonthChangeToChart" />
+        app:layout_constraintTop_toBottomOf="@+id/btnApplyInChartFragment" />
 
     <Spinner
         android:id="@+id/spGridFilter"
@@ -66,7 +66,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnApplyMonthChangeToChart"
+        android:id="@+id/btnApplyInChartFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apply"
@@ -74,6 +74,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/spMonthFilter" />
+
+    <TextView
+        android:id="@+id/tvMonthYYCharts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spTimeAxisMaxValueFilter" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
@@ -86,28 +98,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_full_screen_chart" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMonthYYCharts" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_full_screen_chart" />
+        app:layout_constraintTop_toBottomOf="@+id/spTimeAxisMaxValueFilter" />
 
-    <ImageView
-        android:id="@+id/iv_full_screen_chart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/spTimeAxisMaxValueFilter"
-        app:layout_constraintTop_toBottomOf="@+id/spTimeAxisMaxValueFilter"
-        app:srcCompat="@drawable/ic_baseline_fullscreen_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

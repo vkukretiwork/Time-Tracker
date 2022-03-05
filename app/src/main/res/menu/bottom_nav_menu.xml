@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline_timer_24"/>
 
     <item android:id="@+id/daysListFragment"
-        android:title="Report"
+        android:title="Statistics"
         android:icon="@drawable/ic_baseline_list_24"/>
 
     <item android:id="@+id/chartFragment"

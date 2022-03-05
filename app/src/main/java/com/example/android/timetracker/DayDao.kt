@@ -31,13 +31,20 @@ interface DayDao {
     @Query("Select * from day_table where dateOfDayYYMMDD = :dateProvided")
     fun getDayWithDate(dateProvided : String) : LiveData<Day>
 
-    @Query("Select SUM(studyDurationOfDayInMillis) From day_table")
-    fun getTotalStudyTimeInMillis() : LiveData<Long>
+//    @Query("Select SUM(studyDurationOfDayInMillis) From day_table")
+//    fun getTotalStudyTimeInMillis() : LiveData<Long>
 
     @Query("select * from day_table where dateOfDayYYMMDD like :month || '%' order by dateOfDayYYMMDD asc")
-    fun getDaysOfMonthYYmm(month : String) : LiveData<List<Day>>
+    fun getDaysOfMonthYYmmSortedByDateASC(month : String) : LiveData<List<Day>>
+
+    @Query("select * from day_table where dateOfDayYYMMDD like :month || '%' order by dateOfDayYYMMDD DESC")
+    fun getDaysOfMonthYYmmSortedByDateDESC(month : String) : LiveData<List<Day>>
+
+    @Query("select * from day_table where dateOfDayYYMMDD like :month || '%' order by studyDurationOfDayInMillis DESC")
+    fun getDaysOfMonthYYmmSortedByTime(month : String) : LiveData<List<Day>>
 
     @Query("select * from day_table where dateOfDayYYMMDD like :year || '%'")
     fun getDaysOfYear(year : String) : LiveData<List<Day>>
+
 
 }

@@ -13,9 +13,10 @@ class MainRepository @Inject constructor(
     suspend fun deleteAllDatabase() = dayDao.deleteAllDatabase()
     fun getAllDaysSortedByDate() = dayDao.getAllDaysSortedByDate()
     fun getAllDaysSortedByTime() = dayDao.getAllDaysSortedByTime()
-    fun getTotalStudyTimeInMillis() = dayDao.getTotalStudyTimeInMillis()
     fun getDayWithDate(dateProvided: String) = dayDao.getDayWithDate(dateProvided)
 
-    fun getDaysOfMonthYYmm(month : String) = dayDao.getDaysOfMonthYYmm(month)
+    fun getDaysOfMonthYYmmSortedByDateASC(month : String) = dayDao.getDaysOfMonthYYmmSortedByDateASC(month)
+    fun getDaysOfMonthYYmmSortedByDateDESC(month : String) = dayDao.getDaysOfMonthYYmmSortedByDateDESC(month)
+    fun getDaysOfMonthYYmmSortedByTime(month : String) = dayDao.getDaysOfMonthYYmmSortedByTime(month)
     fun getDaysOfYear(year : String) = dayDao.getDaysOfYear(year)
 }

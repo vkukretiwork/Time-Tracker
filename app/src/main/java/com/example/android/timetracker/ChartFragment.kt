@@ -2,22 +2,19 @@ package com.example.android.timetracker
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.pm.ActivityInfo
-import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_chart.*
 import java.util.concurrent.TimeUnit
 
@@ -28,6 +25,15 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
     private lateinit var sharedPrefs : SharedPreferences
     private lateinit var editorForSpinnerPref : SharedPreferences.Editor
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        activity?.title = "Charts"
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPrefs = requireActivity().getSharedPreferences("spinnerPref", Context.MODE_PRIVATE)
@@ -35,16 +41,13 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
         setupSpinners()
         setupChartsOnTheBasisOfChartTypeSpinner()
 
-        btnApplyMonthChangeToChart.setOnClickListener {
+        btnApplyInChartFragment.setOnClickListener {
             onApplyButtonClicked()
         }
-//        iv_full_screen_chart.setOnClickListener {
-//            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-//        }
     }
 
     private fun observeOnMonth(line : Boolean){
-        viewModel.getDaysOfMonthYYmm(getYYmmStringFromSpinners() )
+        viewModel.getDaysOfMonthYYmmSortedByDateASC(getYYmmStringFromSpinners() )
                 .observe(viewLifecycleOwner, {
             if(line){
                 it?.let {
@@ -186,6 +189,7 @@ class ChartFragment : Fragment(R.layout.fragment_chart) {
             setupChartLayout(true)
             observeOnMonth(true)
         }
+        tvMonthYYCharts.text = TimerUtility.getMonthYY(getYYmmStringFromSpinners())
     }
 
     private fun setupChartLayout(line : Boolean){

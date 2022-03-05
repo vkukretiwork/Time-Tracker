@@ -7,7 +7,9 @@ import android.text.method.ScrollingMovementMethod
 import android.view.*
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.android.timetracker.Constants.ACTION_PAUSE_SERVICE
 import com.example.android.timetracker.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.android.timetracker.Constants.ACTION_STOP_SERVICE
@@ -15,6 +17,7 @@ import com.example.android.timetracker.Constants.MILLIS_IN_1_MINUTE
 import com.example.android.timetracker.Constants.MILLIS_IN_5_MINUTES
 import com.example.android.timetracker.Constants.TOTAL_MILLIS_IN_ONE_DAY
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_timer.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,11 +28,16 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
     private val viewModel : MainViewModel by viewModels()
     private var isTimerRunningTF = false
     private var timeRunInMillisTillNowTF = 0L
+    private lateinit var currentDate : String
 
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//        return super.onCreateView(inflater, container, savedInstanceState)
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        activity?.title = "Time Tracker"
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +45,7 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
 
         subscribeToButtons()
         subscribeToObservers()
+        currentDate = TimerUtility.getCurrDateYYmmDD()
     }
 
     private fun subscribeToButtons(){
@@ -141,8 +150,15 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
             val day = viewModel.currDay.value!!
             day.studyDurationOfDayInMillis = timeRunInMillisTillNowTF
             viewModel.updateDay(day)
+            val instDate = TimerUtility.getCurrDateYYmmDD()
+            if(instDate != currentDate)navigateBackAndForth()
         }
     }
+    private fun navigateBackAndForth(){
+        navHostFragment.findNavController().navigate(R.id.daysListFragment)
+        navHostFragment.findNavController().navigate(R.id.timerFragment)
+    }
+
     private fun subtractMinutes(providedMinutes : Long) {
         val valueAfterSubtracting5Min = TimerService.timeRunInMillisTillNow.value?.minus(providedMinutes)
         if (valueAfterSubtracting5Min != null) {
@@ -154,8 +170,11 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
             val day = viewModel.currDay.value!!
             day.studyDurationOfDayInMillis = timeRunInMillisTillNowTF
             viewModel.updateDay(day)
+            val instDate = TimerUtility.getCurrDateYYmmDD()
+            if(instDate != currentDate)navigateBackAndForth()
         }
     }
+
     private fun showAddNoteDialog(){
         val builder = AlertDialog.Builder(context)
         val inflater = layoutInflater
@@ -175,7 +194,6 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
                 dialog.cancel()
             }
             setView(dialogLayout)
-//            show()
         }
 
         val dialog = builder.create()

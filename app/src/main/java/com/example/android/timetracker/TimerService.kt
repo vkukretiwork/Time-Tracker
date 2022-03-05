@@ -1,5 +1,6 @@
 package com.example.android.timetracker
 
+import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -11,8 +12,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.example.android.timetracker.Constants.ACTION_PAUSE_SERVICE
 import com.example.android.timetracker.Constants.ACTION_START_OR_RESUME_SERVICE
@@ -27,16 +27,23 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class TimerService : LifecycleService() {
 
+//    SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
+    @Inject
+    lateinit var repo : MainRepository
     var isFirstRunOfService = true
     var serviceKilled = false
     @Inject
     lateinit var baseNotificationBuilder : NotificationCompat.Builder
     lateinit var curNotificationBuilder : NotificationCompat.Builder
+    private lateinit var currentDate : String
 
     companion object{
         val isTimerRunning = MutableLiveData<Boolean>()
@@ -47,6 +54,7 @@ class TimerService : LifecycleService() {
 
     private fun postInitialValues(){
         isTimerRunning.postValue(false)
+        currentDate = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
     }
 
     override fun onCreate() {
@@ -113,6 +121,21 @@ class TimerService : LifecycleService() {
                 val notification = curNotificationBuilder
                         .setContentText(TimerUtility.getFormattedStopWatchTime(it * 1000L))
                 notificationManager.notify(NOTIFICATION_ID, notification.build())
+            }
+            val instDate = SimpleDateFormat("yy.MM.dd", Locale.getDefault()).format(Date())
+            if(instDate != currentDate){
+                repo.getDayWithDate(currentDate)
+                        .observe(this, Observer{ day ->
+                            if(day != null){
+                                day.studyDurationOfDayInMillis = timeRunInMillisTillNow.value!!
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    repo.updateDay(day)
+                                }
+                            }
+                        })
+                pauseService()
+                serviceRunning.postValue(false)
+                killService()
             }
             if(it*1000L >= TOTAL_MILLIS_IN_ONE_DAY){
                 pauseService()
