@@ -43,7 +43,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings){
             showResetTimerDialog()
         }
         tvContactUs.setOnClickListener {
-            composeContactUsEmail(arrayOf("vkukretiwork@gmail.com"), "Regarding Time Tracker App")
+            composeContactUsEmail(arrayOf("abc@gmail.com"), "Regarding Time Tracker App")
         }
         tvPrivacyPolicy.setOnClickListener {
             PrivacyPolicyFragment().show(parentFragmentManager, "PrivacyPolicyBottomSheetDialog")

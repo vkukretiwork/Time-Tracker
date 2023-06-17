@@ -18,7 +18,7 @@ android {
                 force 'androidx.appcompat:appcompat:1.3.0'
             }
         }
-        applicationId 'com.example.android.timetracker'
+        applicationId 'com.example.android.betatracker'
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1

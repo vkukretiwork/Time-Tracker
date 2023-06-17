@@ -2,6 +2,7 @@ package com.example.android.timetracker
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.view.*
@@ -35,7 +36,7 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.title = "Time Tracker"
+        activity?.title = "Timer"
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
@@ -113,10 +114,14 @@ class TimerFragment : Fragment(R.layout.fragment_timer) {
         this.isTimerRunningTF = isTimerRunning
         if(!isTimerRunning){
             btnStartPauseTimer.text = "Start"
+            btnStartPauseTimer.setBackgroundColor(Color.parseColor("#0BDA51"))
             btnStopTimerService.isEnabled = true
+            btnStopTimerService.setBackgroundColor(Color.parseColor("#FF3131"))
         } else {
             btnStartPauseTimer.text = "Pause"
+            btnStartPauseTimer.setBackgroundColor(Color.parseColor("#FFBF00"))
             btnStopTimerService.isEnabled = false
+            btnStopTimerService.setBackgroundColor(Color.parseColor("#E5E4E2"))
             enableTimerAdjustingButtons(false)
         }
     }
